@@ -26,7 +26,7 @@ string replaceRoot(string inFilename, string newRoot) {
 @safe pure nothrow
 string objectFilenameForSource(string sourceFilename) {
     return sourceFilename
-        .replaceRoot("build")
+        .replaceRoot("obj")
         .stripExtension
         ~ ".o";
 }
@@ -146,8 +146,8 @@ int main(string[] argv) {
         .filter!(x => x.endsWith(".d") || x.endsWith(".cpp"))
         .array;
 
-    if (!exists("build")) {
-        mkdir("build");
+    if (!exists("obj")) {
+        mkdir("obj");
     }
 
     // Get all of the destination filenames for the objects.

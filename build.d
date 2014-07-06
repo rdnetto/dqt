@@ -4,6 +4,7 @@ import std.stdio;
 import std.file;
 import std.path;
 import std.process;
+import std.parallelism;
 
 enum sourcePath = "source";
 
@@ -164,7 +165,9 @@ int main(string[] argv) {
     }
 
     // Build all of the sources.
-    foreach(sourceFilename, objectFilename; zip(sourceList, objectList)) {
+    foreach(i, args; parallel(zip(sourceList, objectList))) {
+        auto sourceFilename = args[0];
+        auto objectFilename = args[1];
         compileSource(sourceFilename, objectFilename);
     }
 

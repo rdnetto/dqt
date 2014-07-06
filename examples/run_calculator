@@ -13,6 +13,7 @@ rdmd \
     -I../dstruct/source \
     -I../dsmoke/source \
     -Isource \
+    -L-L/usr/lib64/qt4 \
     -L-lstdc++ \
     -L-lQtCore \
     -L-lsmokeqtcore \

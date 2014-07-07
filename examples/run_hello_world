@@ -5,24 +5,32 @@
 
 # This should be run from the root project directory.
 
-gcc \
-    -I/usr/include/qt4/ \
-    -c source/dqt/qstring_cpp.cpp \
-    -o /tmp/qstring_cpp.o &&
-rdmd \
+#Using separate compilation for now, because it's easier to get GCC to link things in the correct order than it is DMD
+
+dmd -c \
     -I../dstruct/source \
     -I../dsmoke/source \
     -Isource \
-    -L-L/usr/lib64/qt4 \
-    -L-lstdc++ \
-    -L-lQtCore \
-    -L-lsmokeqtcore \
-    -L-lsmokeqtgui \
     -debug -d -inline \
-    /tmp/qstring_cpp.o \
     examples/hello_world.d
 
-if [ -f /tmp/qstring_cpp.o ]; then
-    rm /tmp/qstring_cpp.o
-fi
+gcc \
+    hello_world.o \
+    -o examples/hello_world \
+    -m64 \
+    -Xlinker lib/libdqt.a \
+    -Xlinker ../dsmoke/lib/libdsmoke.a \
+    -L/usr/lib64/qt4 \
+    -lstdc++ \
+    -lQtCore \
+    -lsmokeqtcore \
+    -lsmokeqtgui \
+    -L/opt/dmd-2.065/lib64 \
+    -Xlinker -rpath \
+    -Xlinker /opt/dmd-2.065/lib64 \
+    -Xlinker --export-dynamic \
+    -l:libphobos2.a \
+    -lpthread -lm -lrt
 
+examples/hello_world
+rm hello_world.o

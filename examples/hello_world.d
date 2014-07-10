@@ -1,9 +1,6 @@
 import dqt.qtcore;
 import dqt.qtgui;
 
-import dqt._static_qpushbutton;
-import dqt._static_qlabel;
-
 int main() {
     import core.runtime;
     import std.stdio;

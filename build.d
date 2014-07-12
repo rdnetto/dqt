@@ -1,3 +1,5 @@
+#!/usr/bin/env rdmd
+
 import std.range;
 import std.algorithm;
 import std.stdio;
